@@ -1,6 +1,8 @@
 # Agile Accounting Application
 
-A comprehensive accounting application built with Node.js, Express.js, and MongoDB, featuring user authentication, account management, transaction tracking, and financial reporting capabilities.
+A comprehensive accounting **REST API** built with Node.js, Express.js, and MongoDB, featuring user authentication, account management, transaction tracking, and financial reporting capabilities.
+
+> **Note**: This is a backend API only. No frontend is included in this project.
 
 ## 📁 Project Structure
 
@@ -44,7 +46,7 @@ The Agile Accounting Application is a modern, RESTful API-based accounting syste
 
 ## 🛠️ Tech Stack
 
-### Backend
+### Backend API
 - **Runtime**: Node.js 18+
 - **Framework**: Express.js 4.18+
 - **Database**: MongoDB with Mongoose ODM
@@ -55,7 +57,6 @@ The Agile Accounting Application is a modern, RESTful API-based accounting syste
 
 ### DevOps & Deployment
 - **Containerization**: Docker & Docker Compose
-- **Web Server**: Nginx (for frontend serving and reverse proxy)
 - **Environment Management**: dotenv
 
 ### Development Tools
@@ -67,9 +68,8 @@ The Agile Accounting Application is a modern, RESTful API-based accounting syste
 
 | Service | Port | Description |
 |---------|------|-------------|
-| Backend API | 3000 | Express.js server |
+| Backend API | 3000 | Express.js REST API server |
 | MongoDB | 27017 | Database server |
-| Frontend/Nginx | 80 | Web server and reverse proxy |
 
 ## 📋 Prerequisites
 
@@ -167,8 +167,9 @@ docker build -f Dockerfile.frontend -t agile-accounting-frontend .
 
 ### Docker Services
 - **Database**: MongoDB with initialization script
-- **Backend**: Node.js API server
-- **Frontend**: Nginx serving static files and proxying API requests
+- **Backend**: Node.js REST API server
+
+> **Note**: The docker-compose.yml references a frontend service, but no frontend code exists in this project.
 
 ## 🔧 API Endpoints
 
