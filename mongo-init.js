@@ -19,9 +19,8 @@ db.createCollection('users');
 db.users.insertOne({
   username: 'admin',
   email: 'admin@example.com',
-  password: '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password: 'password'
+  password: '$2a$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewdBPj/hL.ckstG.', // password: 'password'
   role: 'admin',
   isActive: true,
-  createdAt: new Date(),
-  updatedAt: new Date()
+  createdAt: new Date()
 });
