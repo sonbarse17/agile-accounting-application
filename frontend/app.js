@@ -68,18 +68,27 @@ async function apiCall(endpoint, method = 'GET', data = null) {
 
     try {
         const response = await fetch(`${API_BASE}${endpoint}`, options);
-        const result = await response.json();
         
         if (!response.ok) {
+            let errorMessage = `HTTP ${response.status}`;
+            try {
+                const result = await response.json();
+                errorMessage = result.error || result.message || errorMessage;
+            } catch (e) {
+                errorMessage = `${errorMessage} - ${response.statusText}`;
+            }
+            
             if ((response.status === 401 || response.status === 403) && authToken && !endpoint.includes('/auth/')) {
                 logout();
                 throw new Error('Session expired. Please login again.');
             }
-            throw new Error(result.error || 'API request failed');
+            throw new Error(errorMessage);
         }
         
+        const result = await response.json();
         return result;
     } catch (error) {
+        console.error('API Error:', error);
         showError(error.message);
         throw error;
     }
