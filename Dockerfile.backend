@@ -2,13 +2,27 @@ FROM node:18-alpine
 
 WORKDIR /app
 
+# Copy package files
 COPY package*.json ./
+
+# Install dependencies
 RUN npm ci --only=production
 
-COPY . .
+# Copy source code (exclude frontend and other unnecessary files)
+COPY server.js ./
+COPY models/ ./models/
+COPY routes/ ./routes/
+COPY middleware/ ./middleware/
+COPY .env ./
+
+# Create non-root user
+RUN addgroup -g 1001 -S nodejs
+RUN adduser -S nodeuser -u 1001
+
+# Change ownership
+RUN chown -R nodeuser:nodejs /app
+USER nodeuser
 
 EXPOSE 3000
-
-USER node
 
 CMD ["npm", "start"]

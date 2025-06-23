@@ -9,16 +9,15 @@ const rateLimit = require('express-rate-limit');
 const authRoutes = require('./routes/auth');
 const accountRoutes = require('./routes/accounts');
 const transactionRoutes = require('./routes/transactions');
-const reportRoutes = require('./routes/reports');
-const customerRoutes = require('./routes/customers');
-const supplierRoutes = require('./routes/suppliers');
-const invoiceRoutes = require('./routes/invoices');
 
 const app = express();
 
 // Security middleware
 app.use(helmet());
-app.use(cors());
+app.use(cors({
+  origin: ['http://localhost', 'http://localhost:80', 'http://frontend'],
+  credentials: true
+}));
 
 // Rate limiting
 const limiter = rateLimit({
@@ -43,10 +42,6 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/agile_acc
 app.use('/api/auth', authRoutes);
 app.use('/api/accounts', accountRoutes);
 app.use('/api/transactions', transactionRoutes);
-app.use('/api/reports', reportRoutes);
-app.use('/api/customers', customerRoutes);
-app.use('/api/suppliers', supplierRoutes);
-app.use('/api/invoices', invoiceRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {

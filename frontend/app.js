@@ -80,11 +80,11 @@ async function apiCall(endpoint, method = 'GET', data = null) {
 document.getElementById('login-form').addEventListener('submit', async (e) => {
     e.preventDefault();
     
-    const email = document.getElementById('email').value;
+    const username = document.getElementById('email').value; // Using email field as username
     const password = document.getElementById('password').value;
     
     try {
-        const result = await apiCall('/auth/login', 'POST', { email, password });
+        const result = await apiCall('/auth/login', 'POST', { username, password });
         authToken = result.token;
         localStorage.setItem('authToken', authToken);
         showSuccess('Login successful!');
