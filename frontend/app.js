@@ -71,6 +71,10 @@ async function apiCall(endpoint, method = 'GET', data = null) {
         const result = await response.json();
         
         if (!response.ok) {
+            if (response.status === 401 || response.status === 403) {
+                logout();
+                throw new Error('Session expired. Please login again.');
+            }
             throw new Error(result.error || 'API request failed');
         }
         
@@ -79,6 +83,12 @@ async function apiCall(endpoint, method = 'GET', data = null) {
         showError(error.message);
         throw error;
     }
+}
+
+function logout() {
+    authToken = null;
+    localStorage.removeItem('authToken');
+    showLogin();
 }
 
 // Authentication

@@ -28,14 +28,7 @@ router.get('/', authenticateToken, async (req, res) => {
 
     const total = await Transaction.countDocuments(query);
 
-    res.json({
-      transactions,
-      pagination: {
-        current: page,
-        pages: Math.ceil(total / limit),
-        total
-      }
-    });
+    res.json(transactions);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

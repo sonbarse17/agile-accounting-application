@@ -24,7 +24,7 @@ router.get('/', authenticateToken, async (req, res) => {
       .populate('parentAccount', 'name code')
       .sort({ code: 1 });
 
-    res.json({ accounts });
+    res.json(accounts);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
