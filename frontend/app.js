@@ -37,8 +37,13 @@ function showTransactions() {
     loadTransactions();
 }
 
+function showRegister() {
+    hideAllSections();
+    document.getElementById('register-section').style.display = 'block';
+}
+
 function hideAllSections() {
-    const sections = ['login-section', 'dashboard-section', 'accounts-section', 'transactions-section'];
+    const sections = ['login-section', 'register-section', 'dashboard-section', 'accounts-section', 'transactions-section'];
     sections.forEach(id => {
         document.getElementById(id).style.display = 'none';
     });
@@ -191,6 +196,25 @@ function showSuccess(message) {
     document.getElementById('main-content').prepend(successDiv);
     setTimeout(() => successDiv.remove(), 3000);
 }
+
+// Registration
+document.getElementById('register-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const username = document.getElementById('reg-username').value;
+    const email = document.getElementById('reg-email').value;
+    const password = document.getElementById('reg-password').value;
+    
+    try {
+        const result = await apiCall('/auth/register', 'POST', { username, email, password });
+        authToken = result.token;
+        localStorage.setItem('authToken', authToken);
+        showSuccess('Registration successful!');
+        showDashboard();
+    } catch (error) {
+        showError('Registration failed: ' + error.message);
+    }
+});
 
 // Initialize app
 document.addEventListener('DOMContentLoaded', () => {
