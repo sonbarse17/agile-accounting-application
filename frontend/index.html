@@ -3,67 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agile Accounting Application</title>
+    <title>Agile Accounting</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Agile Accounting Application</h1>
-            <nav>
-                <a href="#" onclick="showLogin()">Login</a>
-                <a href="#" onclick="showDashboard()">Dashboard</a>
-                <a href="#" onclick="showAccounts()">Accounts</a>
-                <a href="#" onclick="showTransactions()">Transactions</a>
-            </nav>
-        </header>
+    <div class="app">
+        <nav class="sidebar" id="sidebar">
+            <div class="logo">
+                <h2>💼 Agile Accounting</h2>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#" onclick="showDashboard()" class="nav-link">📊 Dashboard</a></li>
+                <li><a href="#" onclick="showAccounts()" class="nav-link">🏦 Accounts</a></li>
+                <li><a href="#" onclick="showTransactions()" class="nav-link">💳 Transactions</a></li>
+                <li><a href="#" onclick="logout()" class="nav-link logout">🚪 Logout</a></li>
+            </ul>
+        </nav>
 
-        <main id="main-content">
-            <div id="login-section">
-                <h2>Login</h2>
-                <form id="login-form">
-                    <input type="text" id="email" placeholder="Username or Email" required>
-                    <input type="password" id="password" placeholder="Password" required>
-                    <button type="submit">Login</button>
-                </form>
-                <p><a href="#" onclick="showRegister()">Don't have an account? Register</a></p>
+        <main class="main-content">
+            <div class="mobile-header">
+                <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+                <h1>Agile Accounting</h1>
             </div>
 
-            <div id="register-section" style="display: none;">
-                <h2>Register</h2>
-                <form id="register-form">
-                    <input type="text" id="reg-username" placeholder="Username" required>
-                    <input type="email" id="reg-email" placeholder="Email" required>
-                    <input type="password" id="reg-password" placeholder="Password" required>
-                    <button type="submit">Register</button>
-                </form>
-                <p><a href="#" onclick="showLogin()">Already have an account? Login</a></p>
+            <div id="login-section" class="auth-section">
+                <div class="auth-card">
+                    <h2>Welcome Back</h2>
+                    <form id="login-form" class="auth-form">
+                        <div class="form-group">
+                            <input type="text" id="email" placeholder="Username or Email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="password" placeholder="Password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Login</button>
+                    </form>
+                    <p class="auth-link"><a href="#" onclick="showRegister()">Don't have an account? Register</a></p>
+                </div>
             </div>
 
-            <div id="dashboard-section" style="display: none;">
-                <h2>Dashboard</h2>
-                <div class="stats">
+            <div id="register-section" class="auth-section" style="display: none;">
+                <div class="auth-card">
+                    <h2>Create Account</h2>
+                    <form id="register-form" class="auth-form">
+                        <div class="form-group">
+                            <input type="text" id="reg-username" placeholder="Username (min 3 chars)" minlength="3" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="reg-email" placeholder="Email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="reg-password" placeholder="Password (min 6 chars)" minlength="6" required>
+                        </div>
+                        <div class="form-group">
+                            <select id="reg-role">
+                                <option value="accountant">Accountant</option>
+                                <option value="viewer">Viewer</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Register</button>
+                    </form>
+                    <p class="auth-link"><a href="#" onclick="showLogin()">Already have an account? Login</a></p>
+                </div>
+            </div>
+
+            <div id="dashboard-section" class="content-section" style="display: none;">
+                <div class="page-header">
+                    <h2>Dashboard</h2>
+                </div>
+                <div class="stats-grid">
                     <div class="stat-card">
-                        <h3>Total Accounts</h3>
-                        <p id="total-accounts">-</p>
+                        <div class="stat-icon">🏦</div>
+                        <div class="stat-info">
+                            <h3 id="total-accounts">-</h3>
+                            <p>Total Accounts</p>
+                        </div>
                     </div>
                     <div class="stat-card">
-                        <h3>Total Transactions</h3>
-                        <p id="total-transactions">-</p>
+                        <div class="stat-icon">💳</div>
+                        <div class="stat-info">
+                            <h3 id="total-transactions">-</h3>
+                            <p>Total Transactions</p>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div id="accounts-section" style="display: none;">
-                <h2>Accounts</h2>
-                <button onclick="createAccount()">Create Account</button>
-                <div id="accounts-list"></div>
+            <div id="accounts-section" class="content-section" style="display: none;">
+                <div class="page-header">
+                    <h2>Accounts</h2>
+                    <button onclick="createAccount()" class="btn btn-primary">+ Create Account</button>
+                </div>
+                <div id="accounts-list" class="data-list"></div>
             </div>
 
-            <div id="transactions-section" style="display: none;">
-                <h2>Transactions</h2>
-                <button onclick="createTransaction()">Create Transaction</button>
-                <div id="transactions-list"></div>
+            <div id="transactions-section" class="content-section" style="display: none;">
+                <div class="page-header">
+                    <h2>Transactions</h2>
+                    <button onclick="createTransaction()" class="btn btn-primary">+ Create Transaction</button>
+                </div>
+                <div id="transactions-list" class="data-list"></div>
             </div>
         </main>
     </div>

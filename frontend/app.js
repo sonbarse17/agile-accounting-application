@@ -73,7 +73,11 @@ async function apiCall(endpoint, method = 'GET', data = null) {
             let errorMessage = `HTTP ${response.status}`;
             try {
                 const result = await response.json();
-                errorMessage = result.error || result.message || errorMessage;
+                if (result.errors && Array.isArray(result.errors)) {
+                    errorMessage = result.errors.map(err => err.msg || err.message).join(', ');
+                } else {
+                    errorMessage = result.error || result.message || errorMessage;
+                }
             } catch (e) {
                 errorMessage = `${errorMessage} - ${response.statusText}`;
             }
@@ -223,9 +227,10 @@ document.getElementById('register-form').addEventListener('submit', async (e) =>
     const username = document.getElementById('reg-username').value;
     const email = document.getElementById('reg-email').value;
     const password = document.getElementById('reg-password').value;
+    const role = document.getElementById('reg-role').value;
     
     try {
-        const result = await apiCall('/auth/register', 'POST', { username, email, password });
+        const result = await apiCall('/auth/register', 'POST', { username, email, password, role });
         authToken = result.token;
         localStorage.setItem('authToken', authToken);
         showSuccess('Registration successful!');
@@ -234,6 +239,11 @@ document.getElementById('register-form').addEventListener('submit', async (e) =>
         showError('Registration failed: ' + error.message);
     }
 });
+
+// Mobile sidebar toggle
+function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('active');
+}
 
 // Initialize app
 document.addEventListener('DOMContentLoaded', () => {
