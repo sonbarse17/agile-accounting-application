@@ -6,23 +6,14 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install dependencies
-RUN npm ci --only=production
+RUN npm ci --omit=dev
 
-# Copy source code (exclude frontend and other unnecessary files)
+# Copy source code
 COPY server.js ./
 COPY models/ ./models/
 COPY routes/ ./routes/
 COPY middleware/ ./middleware/
-COPY .env ./
-
-# Create non-root user
-RUN addgroup -g 1001 -S nodejs
-RUN adduser -S nodeuser -u 1001
-
-# Change ownership
-RUN chown -R nodeuser:nodejs /app
-USER nodeuser
 
 EXPOSE 3000
 
-CMD ["npm", "start"]
+CMD ["node", "server.js"]

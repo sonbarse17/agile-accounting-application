@@ -15,11 +15,7 @@ services:
       - "27017:27017"
     volumes:
       - mongodb_data:/data/db
-    healthcheck:
-      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+
     networks:
       - agile-network
 
@@ -37,8 +33,7 @@ services:
     ports:
       - "3000:3000"
     depends_on:
-      database:
-        condition: service_healthy
+      - database
     networks:
       - agile-network
 

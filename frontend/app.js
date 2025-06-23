@@ -71,7 +71,7 @@ async function apiCall(endpoint, method = 'GET', data = null) {
         const result = await response.json();
         
         if (!response.ok) {
-            if (response.status === 401 || response.status === 403) {
+            if ((response.status === 401 || response.status === 403) && authToken && !endpoint.includes('/auth/')) {
                 logout();
                 throw new Error('Session expired. Please login again.');
             }
