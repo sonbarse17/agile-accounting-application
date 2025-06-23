@@ -28,7 +28,7 @@ services:
       NODE_ENV: production
       PORT: 3000
       MONGODB_URI: mongodb://admin:password123@database:27017/agile_accounting?authSource=admin
-      JWT_SECRET: your-super-secret-jwt-key-change-in-production
+      JWT_SECRET: 9f90c31f2f52be5ddce6043fb543321cad766c6eafa1ef949ace6299fca2c800382dbf3e45b22e81c13b83e2924b57a214bcafb94c60077b98125164548494b8
     ports:
       - "3000:3000"
     depends_on:
